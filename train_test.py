@@ -28,6 +28,7 @@ fc1_input_size = 768
 fc1_output_size = 512
 fc2_output_size = 48
 fc3_output_size = 2
+
 class BERT(nn.Module):
 
     def __init__(self, bert):
@@ -71,7 +72,7 @@ def train():
     preds = []
     loss = 0
   
-    for step, batch in enumerate(train_set_dataloader):
+    for i, batch in enumerate(train_set_dataloader):
             
         batch = [b.to(device) for b in batch]
         sent_id, mask, labels = batch
@@ -83,8 +84,8 @@ def train():
         optimizer.step()
         curr_preds = curr_preds.detach().cpu().numpy()
 
-    preds.append(curr_preds)
     loss_average = loss / len(train_set_dataloader)
+    preds.append(curr_preds)
     preds = np.concatenate(preds, axis = 0)
 
     return loss_average, preds
@@ -98,7 +99,7 @@ def evaluate():
     accuracy = 0
     loss = 0
 
-    for step, batch in enumerate(val_set_dataloader):
+    for i, batch in enumerate(val_set_dataloader):
         batch = [b.to(device) for b in batch]
         sent_id, mask, labels = batch
 
@@ -108,9 +109,9 @@ def evaluate():
             loss += lcurr_loss.item()
             curr_preds = curr_preds.detach().cpu().numpy()
             preds.append(curr_preds)
-
-    loss_average = loss / len(val_set_dataloader) 
+ 
     preds = np.concatenate(preds, axis = 0)
+    loss_average = loss / len(val_set_dataloader)
 
     return loss_average, preds
   
@@ -121,8 +122,8 @@ min_loss = float('inf')
 train_set_loss_list = []
 val_set_loss_list = []
 
-for e in range(num_epochs):
-    print('\n Epoch :' + str(e + 1))
+for i in range(num_epochs):
+    print('\n Epoch :' + str(i + 1))
     train_set_loss, _ = train()
     val_set_loss, _ = evaluate()
     
@@ -136,10 +137,12 @@ for e in range(num_epochs):
     val_set_loss_list.append(val_set_loss)
     
 # Evaluates model performance on test set
+
 with torch.no_grad():
     test_predictions = model(test_torch.to(device), test_attention_mask.to(device))
     test_predictions = test_predictions.detach().cpu().numpy()
     
 # Print the model performance (Accuracy, F1-Score, Precision, Recall, etc.)
+
 test_predictions = np.argmax(test_predictions, axis = 1)
 print(classification_report(test_labels, test_predictions))
