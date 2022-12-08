@@ -14,7 +14,6 @@ device = torch.device("cuda")
 bert = AutoModel.from_pretrained('bert-base-uncased')
 tokenizer = BertTokenizerFast.from_pretrained('bert-base-uncased')
 df = pd.read_csv("combined_data_v3.csv")
-df.head()
 
 # removes irrevelant columns from the original data
 df = df.drop(['patient_id', 'uniq_id', 'chart_labeled_date', 'Unnamed: 0'], axis = 1)
