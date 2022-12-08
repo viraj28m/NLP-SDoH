@@ -8,7 +8,7 @@ from transformers import AutoModel, BertTokenizerFast
 from transformers import AdamW
 import torch
 import torch.nn as nn
-from torch.utils.data import RandomSampler, SequentialSampler, TensorDataset, DataLoader
+from torch.utils.data import RandomSampler, TensorDataset, DataLoader
 
 # Training and validation set dataLoader from pytorch
 
@@ -16,7 +16,7 @@ batch_size = 64
 train_set_data = TensorDataset(train_tensor, train_attention_mask, train_labels)
 val_set_data = TensorDataset(val_tensor, val_attention_mask, val_labels)
 train_set_dataloader = DataLoader(train_set_data, sampler=RandomSampler(train_set_data), batch_size=batch_size)
-val_set_dataloader = DataLoader(val_set_data, sampler=SequentialSampler(val_set_data), batch_size=batch_size)
+val_set_dataloader = DataLoader(val_set_data, sampler=RandomSampler(val_set_data), batch_size=batch_size)
 
 # freeze all the parameters for fine-tuning 
 for parameter in bert.parameters():
