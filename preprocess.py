@@ -8,7 +8,6 @@ from transformers import AutoModel, BertTokenizerFast
 from transformers import AdamW
 import torch
 import torch.nn as nn
-from torch.utils.data import RandomSampler, SequentialSampler, TensorDataset, DataLoader
 
 device = torch.device("cuda")
 bert = AutoModel.from_pretrained('bert-base-uncased')
