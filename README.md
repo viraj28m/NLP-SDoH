@@ -14,7 +14,7 @@ We decided to establish a baseline of performance prior to attempting in-context
 
 In order to improve upon our baseline of a pre-trained BERT model, we decided to incorporate an emergent property of language models that has not yet been fully explored: in-context learning. To provide a more robust definition of in-context learning, it is essentially a Bayesian framework for “locating” latent concepts acquired by a language model by conditioning the LM simply on an input-output example, rather than optimizing hyperparameters using backpropagation. An input-output example would thus consist of the pairing of a question-answer, such as “Q: Does this person have food insecurity?” and “A: 1” or “A: 0” depending on the true label in the data. In-context learning prompts are a list of concatenated IID (independent and identically distributed) training examples. The diagram below illustrates how this would work as the input to our model.
 
-![Alt text](/Users/virajmehta/Desktop/ICL_Diagram.png)
+<img src="/Users/virajmehta/Desktop/ICL_Diagram.png" alt="Alt text" title="In-Context Learning Diagram">
 
 # References
 
