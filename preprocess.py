@@ -16,15 +16,12 @@ tokenizer = BertTokenizerFast.from_pretrained('bert-base-uncased')
 df = pd.read_csv("combined_data_v3.csv")
 df.head()
 
-
 # removes irrevelant columns from the original data
 df = df.drop(['patient_id', 'uniq_id', 'chart_labeled_date', 'Unnamed: 0'], axis = 1)
-df.head()
 
 # replaces True and Falses with 1 and 0 to make outcome more straightforward
 df = df.replace(True, 1)
 df = df.replace(False, 0)
-df.head()
 
 # Using train test split, we split the text into training, validation, and test sets
 
